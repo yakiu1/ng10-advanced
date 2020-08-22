@@ -1,3 +1,4 @@
+import { PagesModule } from './pages/pages.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { Page1Component } from './page1/page1.component';
@@ -11,6 +12,10 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'page1', component: Page1Component },
   { path: 'page2', component: Page2Component },
+  {
+    path: 'pages',
+    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
+  },
   {
     path: 'utilities',
     children: [

@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
@@ -6,10 +7,19 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute) {
+
+  }
 
   ngOnInit(): void {
     document.body.className = 'bg-gradient-primary';
+
+
+    setTimeout(() => {
+      localStorage.setItem('token', '134');
+      console.log('gogogo!');
+      this.router.navigate(['/' + this.route.snapshot.queryParamMap.get('ret')]);
+    }, 3000);
   }
   ngOnDestroy(): void {
     document.body.className = '';

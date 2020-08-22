@@ -37,6 +37,6 @@ export class ColorComponent implements OnInit {
     }
 
     this.type++;
-    this.router.navigate(['/utilities/color/' + this.type], navigationExtras);
+    this.router.navigate(['dashboard/utilities/color/' + this.type], navigationExtras);
   }
 }

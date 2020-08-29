@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, AbstractControl, Form, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl, Form, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   templateUrl: './register.component.html',
@@ -18,15 +18,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.form = fb.group(
-      {
-        firstName: this.fb.control('Gon', [Validators.required]),
-        lastName: this.fb.control('dfa', [Validators.maxLength(3)]),
-        email: this.fb.control(''),
-        pavssword: this.fb.control(''),
-        repeatPassword: this.fb.control(''),
-
-      }
       // {
       //   firstName: ['Gon', [Validators.required]],
       //   lastName: ['123'],
@@ -34,11 +25,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
       //   password: [''],
       //   repeatPassword: ['']
       // }
-    );
   }
 
 
   ngOnInit(): void {
+    this.form = this.fb.group(
+      {
+        firstName: this.fb.control('Gon', [Validators.required]),
+        lastName: this.fb.control('dfa', [Validators.maxLength(3)]),
+        // email: this.fb.control(''),
+        email: this.fb.array([
+          this.fb.control('doggy.huang@gmail.com', {
+            validators: [Validators.required]
+          }),
+          this.fb.control('abc@example.com', {
+            validators: [Validators.required]
+          }),
+        ]),
+        password: this.fb.control(''),
+        repeatPassword: this.fb.control(''),
+
+      });
     document.body.className = 'bg-gradient-primary';
     this.form.get('repeatPassword').setValidators([repeatPasswordValidator(this.form)]);
   }
@@ -50,6 +57,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log('Im going to submit');
+  }
+
+  doAddEmail() {
+    const emailControl = this.form.get('email') as FormArray;
+    emailControl.push(this.fb.control('', [Validators.email]));
+  }
+
+  fa(name: string): FormArray {
+    return this.form.get(name) as FormArray;
   }
 }
 

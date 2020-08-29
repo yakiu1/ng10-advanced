@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl, Form, FormGroup } from '@angular/forms';
 
 @Component({
   templateUrl: './register.component.html',
@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     password: '',
     repeatPassword: '',
   };
-  form: any;
+  form: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.form = fb.group(
@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         firstName: this.fb.control('Gon', [Validators.required]),
         lastName: this.fb.control('dfa', [Validators.maxLength(3)]),
         email: this.fb.control(''),
-        password: this.fb.control(''),
+        pavssword: this.fb.control(''),
         repeatPassword: this.fb.control(''),
 
       }
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       //   lastName: ['123'],
       //   email: [''],
       //   password: [''],
-      //   repeatPassword: [''],
+      //   repeatPassword: ['']
       // }
     );
   }
@@ -40,6 +40,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     document.body.className = 'bg-gradient-primary';
+    this.form.get('repeatPassword').setValidators([repeatPasswordValidator(this.form)]);
   }
 
   ngOnDestroy(): void {
@@ -48,6 +49,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
-
+    console.log('Im going to submit');
   }
 }
+
+export function repeatPasswordValidator(f: FormGroup) {
+  return (control: AbstractControl): { [key: string]: any } => {
+    console.log(control.value);
+    return control.value === f.get('password').value ? null : { repeatPassword: true };
+  }
+}
+

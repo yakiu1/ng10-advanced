@@ -14,24 +14,42 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                 </div>
-                <form class="user">
+                <form class="user" (ngSubmit)="(form)" #form="ngForm">
                   <div class="form-group">
-                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                      aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    <input name="email" type="email" class="form-control form-control-user" id="exampleInputEmail"
+                      aria-describedby="emailHelp" placeholder="Enter Email Address..." [(ngModel)]="data.email"
+                      #mEmail="ngModel" required>
+                  </div>
+                  <div>
+                    dirty: {{mEmail.dirty}}
+                    <br />
+                    pristine: {{mEmail.pristine}}
+                    <br />
+                    value: {{mEmail.value}}
+                    <br />
+                    invalid: {{mEmail.invalid}}
+                    <br />
+                    name: {{mEmail.name}}
+                    <br />
+                    options: {{mEmail.options}}
+                    <br />
+                    errors: {{mEmail.errors|json}}
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword"
-                      placeholder="Password">
+                    <input name="password" type="password" class="form-control form-control-user"
+                      id="exampleInputPassword" placeholder="Password" [(ngModel)]="data.password" #mPassword="ngModel">
                   </div>
                   <div class="form-group">
                     <div class="custom-control custom-checkbox small">
-                      <input type="checkbox" class="custom-control-input" id="customCheck">
+                      <input name="rememberMe" type="checkbox" class="custom-control-input" id="customCheck"
+                        [(ngModel)]="data.remember" #mRememberMe="ngModel">
                       <label class="custom-control-label" for="customCheck">Remember Me</label>
                     </div>
                   </div>
-                  <a href="index.html" class="btn btn-primary btn-user btn-block">
+                  <button type="submit" href="index.html" class="btn btn-primary btn-user btn-block"
+                    (click)="onSubmit(form)">
                     Login
-                  </a>
+                  </button>
                   <hr>
                   <a href="index.html" class="btn btn-google btn-user btn-block">
                     <i class="fab fa-google fa-fw"></i> Login with Google
@@ -39,6 +57,16 @@
                   <a href="index.html" class="btn btn-facebook btn-user btn-block">
                     <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                   </a>
+
+                  <p>form.submit: {{form.submitted}}</p>
+                  <p>form.stasus: {{form.status}}</p>
+                  <p>form.touched: {{form.touched}}</p>
+                  <p>form.untouched: {{form.untouched}}</p>
+                  <p>form.valid: {{form.valid}}</p>
+                  <p>form.invalid: {{form.invalid}}</p>
+                  <p>form.value: {{form.value}}</p>
+                  <p>form.dirty: {{form.dirty}}</p>
+                  <p>form.errors {{form.errors|json}}</p>
                 </form>
                 <hr>
                 <div class="text-center">
